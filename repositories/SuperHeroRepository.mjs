@@ -51,15 +51,17 @@ class SuperHeroRepository extends IRepository {
     //Actualizar registro
     async actualizarSuperheroes(nombreSuperHeroe,datosActualizados) {
         // SuperHero.updateOne() es un método de Mongoose que se utiliza para actualizar un documento en la colección "Grupo-12".
+        //UpdateOne (Case-Insensitive) - Actualiza 'Juan', 'juan', 'JUAN', etc.
          return await SuperHero.updateOne(
-            {nombreSuperHeroe},  
+             {nombreSuperHeroe:{ $regex: `^${nombreSuperHeroe}$`, $options: "i" }},  
             {$set: datosActualizados}, //actualiza los datos de body postman
     );
     }
 
     //Eliminar registro
     async eliminarSuperheroes(nombreSuperHeroe) {
-          return await SuperHero.deleteOne({nombreSuperHeroe}); 
+        //DeleteOne (Case-Insensitive) - Borra 'Juan', 'juan', 'JUAN', etc.
+          return await SuperHero.deleteOne({nombreSuperHeroe:{ $regex: `^${nombreSuperHeroe}$`, $options: "i" }}); 
     }
 }
     
