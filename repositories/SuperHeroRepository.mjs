@@ -25,8 +25,12 @@ class SuperHeroRepository extends IRepository {
 
     //Busqueda mayores de 30
     async obtenerMayoresDe30() {
+        
+        //Que sea del planeta "Tierra" , mayor a 30 y al menos 2 poderes
+        return await SuperHero.find({$and: [{planetaOrigen: "Tierra"}, {edad: {$gt: 30 }}, {$expr: { $gt: [{ $size: "$poderes" }, 1] }}]});
+        
         //Operador de comparación - $gt = “greater than” (mayor que)
-        return await SuperHero.find({edad: {$gt: 30}});
+        //return await SuperHero.find({edad: {$gt: 30}});
 
         //Que sea del planeta "Tierra" o mayor a 30
         //return await SuperHero.find({ $or: [{ planetaOrigen: "Tierra" }, { edad: { $gt: 30 } }]});
